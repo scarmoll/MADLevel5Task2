@@ -14,22 +14,22 @@ abstract class GameRoomDatabase : RoomDatabase() {
         private const val DATABASE_NAME = "GAME_DATABASE"
 
         @Volatile
-        private var gameRoomDatabaseInstance: GameRoomDatabase? = null
+        private var INSTANCE: GameRoomDatabase? = null
 
         fun getDatabase(context: Context): GameRoomDatabase? {
-            if (gameRoomDatabaseInstance == null) {
+            if (INSTANCE == null) {
                 synchronized(GameRoomDatabase::class.java) {
-                    if (gameRoomDatabaseInstance == null) {
-                        gameRoomDatabaseInstance = Room.databaseBuilder(
+                    if (INSTANCE == null) {
+                        INSTANCE = Room.databaseBuilder(
                             context.applicationContext,
                             GameRoomDatabase::class.java, DATABASE_NAME
                         )
-//                            .allowMainThreadQueries()
+                            .fallbackToDestructiveMigration()
                             .build()
                     }
                 }
             }
-            return gameRoomDatabaseInstance
+            return INSTANCE
         }
     }
 
