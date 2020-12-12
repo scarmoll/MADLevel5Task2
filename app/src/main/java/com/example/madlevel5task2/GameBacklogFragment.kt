@@ -45,7 +45,7 @@ class GameBacklogFragment : Fragment() {
 
         rvGamelist.adapter = gameListAdapter
 
-        createItemTouchHelper()
+        createItemTouchHelper().attachToRecyclerView(rvGamelist)
     }
 
     private fun observeAddGameResult() {
