@@ -41,13 +41,13 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-//    fun deleteGame(id: Int) {
-//        MainScope().launch {
-//            withContext(Dispatchers.IO) {
-//                gameRepository.deleteGame(id)
-//            }
-//        }
-//    }
+    fun deleteGame(game: Game) {
+        MainScope().launch {
+            withContext(Dispatchers.IO) {
+                gameRepository.deleteGame(game)
+            }
+        }
+    }
 
     private fun isGameValid(game: Game): Boolean {
         return when {

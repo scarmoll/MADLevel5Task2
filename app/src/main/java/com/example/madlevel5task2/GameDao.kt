@@ -10,7 +10,7 @@ interface GameDao {
     suspend fun insertGame(game: Game)
 
     @Query("SELECT * FROM GameTable ORDER BY date ASC")
-    fun getGameList(): LiveData<Game?>
+    fun getGameList(): LiveData<List<Game>>
 
     @Delete
     suspend fun deleteGame(game: Game)

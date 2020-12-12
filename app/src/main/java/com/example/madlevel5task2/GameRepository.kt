@@ -12,7 +12,7 @@ class GameRepository(context: Context) {
         gameDao = database!!.gameDao()
     }
 
-    fun getGameList(): LiveData<Game?> {
+    fun getGameList(): LiveData<List<Game>> {
         return gameDao.getGameList()
     }
 
