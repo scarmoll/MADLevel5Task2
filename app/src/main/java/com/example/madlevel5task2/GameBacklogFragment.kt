@@ -22,7 +22,7 @@ class GameBacklogFragment : Fragment() {
     private val viewModel: GameViewModel by viewModels()
 
     private val gameList = arrayListOf<Game>()
-    private val gameListAdapter = GameListAdapter(gameList)
+    private val gameListAdapter = GameAdapter(gameList)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
