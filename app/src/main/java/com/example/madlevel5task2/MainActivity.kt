@@ -1,11 +1,10 @@
 package com.example.madlevel5task2
 
 import android.os.Bundle
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import kotlinx.android.synthetic.main.activity_main.*
@@ -13,6 +12,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     private lateinit var navController: NavController
+
+    private val viewModel: GameViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,14 +27,23 @@ class MainActivity : AppCompatActivity() {
                 R.id.action_FirstFragment_to_SecondFragment
             )
         }
+
+        toolbar.setNavigationOnClickListener {
+            super.onBackPressed()
+        }
+
         fabToggler()
     }
 
     private fun fabToggler() {
-        navController.addOnDestinationChangedListener { _,       destination, _ ->
+        navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id in arrayOf(R.id.SecondFragment)) {
+                toolbar.title = "Add Game"
+                toolbar.setNavigationIcon(R.drawable.arrow_back)
                 fab.hide()
             } else {
+                toolbar.title = "Game Backlog"
+                toolbar.navigationIcon = null
                 fab.show()
             }
         }
@@ -49,8 +59,12 @@ class MainActivity : AppCompatActivity() {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+
         return when (item.itemId) {
-            R.id.action_settings -> true
+            R.id.action_settings -> {
+                viewModel.deleteGames()
+                return true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }

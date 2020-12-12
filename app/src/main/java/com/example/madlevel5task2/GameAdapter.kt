@@ -7,18 +7,21 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_game.view.*
 import java.text.DateFormatSymbols
 
-class GameAdapter(private val backlogs: List<Game>) :
+class GameAdapter(private val gameList: List<Game>) :
     RecyclerView.Adapter<GameAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemview: View) : RecyclerView.ViewHolder(itemview) {
 
         fun databind(game: Game) {
+            val monthFormat = game.date.month
 
             itemView.tvGameName.text = game.title
             itemView.tvPlatform.text = game.platform
-            itemView.tvReleaseDate.text = String.format(
-                "Release: " + game.date.date + " " +
-                        DateFormatSymbols.getInstance().months[game.date.month - 1] + " " +
+
+            itemView.tvDate.text = String.format(
+                "Release: " +
+                        game.date.date + " " +
+                        DateFormatSymbols().months[monthFormat] + " " +
                         game.date.year
             )
         }
@@ -30,11 +33,11 @@ class GameAdapter(private val backlogs: List<Game>) :
         )
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.databind(backlogs[position])
+    override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
+        viewHolder.databind(gameList[position])
     }
 
     override fun getItemCount(): Int {
-        return backlogs.size
+        return gameList.size
     }
 }
